@@ -1,2 +1,4 @@
-export * from './core/generator.js';
-export * from './core/utils.js';
+exports = {
+  ...require('./core/generator.js'),
+  ...require('./core/utils.js'),
+};
