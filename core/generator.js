@@ -38,5 +38,3 @@ exports.outputTo = (dir, config) => ({
   toJSON: () => fse.outputFileSync(path.join(dir, 'theme.json'), JSON.stringify(config, null, 2)),
   toTypeScript: () => fse.outputFileSync(path.join(dir, 'theme.ts'), `export default ${javascript.stringify(JSON.parse(JSON.stringify(config)), null, '  ')} as const;\n`),
 });
-
-exports.outputTo('.', { a: new String('hello') }).toTypeScript();
