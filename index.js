@@ -1,4 +1,7 @@
-exports = {
-  ...require('./core/generator.js'),
-  ...require('./core/utils.js'),
-};
+const { create, combine, outputTo } = require('./core/generator.js');
+const { linearGradient } = require('./core/utils.js');
+
+exports.create = create;
+exports.combine = combine;
+exports.outputTo = outputTo;
+exports.linearGradient = linearGradient;
