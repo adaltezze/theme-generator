@@ -1,4 +1,6 @@
+const path = require('path');
 const fse = require('fs-extra');
+const javascript = require('javascript-stringify');
 
 /**
  * @param {string} configName
@@ -25,11 +27,14 @@ exports.combine = (...configs) => {
   return combinedConfig;
 };
 
+const jsToFile = {};
+
 /**
- * @param {string} path
+ * @param {string} dir
  * @param {Object} config
- * @return {{ toJSON: (function(): *)}}
+ * @return {{ toJSON: (function(): *), toTypeScript: (function(): *) }}
  */
-exports.outputTo = (path, config) => ({
-  toJSON: () => fse.outputFileSync(path, JSON.stringify(config, null, 2)),
+exports.outputTo = (dir, config) => ({
+  toJSON: () => fse.outputFileSync(path.join(dir, 'theme.json'), JSON.stringify(config, null, 2)),
+  toTypeScript: () => fse.outputFileSync(path.join(dir, 'theme.ts'), `export default ${javascript.stringify(config, null, '  ')} as const;\n`),
 });
