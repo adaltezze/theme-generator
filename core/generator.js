@@ -1,6 +1,4 @@
 const fse = require('fs-extra');
-const { fileURLToPath } = require('url');
-const { dirname, join } = require('path');
 
 /**
  * @param {string} configName
