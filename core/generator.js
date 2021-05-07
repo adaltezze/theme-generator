@@ -1,13 +1,13 @@
-import fse from 'fs-extra';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+const fse = require('fs-extra');
+const { fileURLToPath } = require('url');
+const { dirname, join } = require('path');
 
 /**
  * @param {string} configName
  * @param {Object} config
  * @return {Function}
  */
-export const create = (configName, config) => {
+exports.create = (configName, config) => {
   const fn = () => config;
   fn.configName = configName;
   fn.config = config;
@@ -19,7 +19,7 @@ export const create = (configName, config) => {
  * @param {...({ configName: string, config: Object })} configs
  * @return {Object}
  */
-export const combine = (...configs) => {
+exports.combine = (...configs) => {
   const combinedConfig = {};
   configs.forEach(({ configName, config }) => {
     combinedConfig[configName] = config;
@@ -32,12 +32,6 @@ export const combine = (...configs) => {
  * @param {Object} config
  * @return {{ toJSON: (function(): *)}}
  */
-export const outputTo = (path, config) => ({
+exports.outputTo = (path, config) => ({
   toJSON: () => fse.outputFileSync(path, JSON.stringify(config, null, 2)),
 });
-
-/**
- * @param {ImportMeta} meta
- * @return {string}
- */
-export const extractDir = meta => dirname(fileURLToPath(meta.url));

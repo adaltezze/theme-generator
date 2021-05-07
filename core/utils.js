@@ -2,7 +2,7 @@
  * @param {{ [direction]: string, colors: string[]  }} gradient
  * @return {{ direction: string | undefined, colors: string[] }}
  */
-export const linearGradient = gradient => {
+exports.linearGradient = gradient => {
   const { direction, colors } = gradient;
   return new (class extends String {
     direction = direction;
