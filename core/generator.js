@@ -51,8 +51,6 @@ exports.combine = (...configs) => {
   return combinedConfig;
 };
 
-const jsToFile = {};
-
 /**
  * @param {string} dir
  * @param {Object} config
