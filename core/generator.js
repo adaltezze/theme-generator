@@ -1,6 +1,28 @@
 const path = require('path');
 const fse = require('fs-extra');
+const kindOf = require('kind-of');
 const javascript = require('javascript-stringify');
+
+/**
+ * @param {Object} config
+ */
+const createConfig = config => {
+  return Object.entries(config).reduce((acc, [key, value]) => {
+    switch (kindOf(value)) {
+      case 'object':
+        acc[key] = createConfig(value);
+        break;
+      case 'function':
+        acc[key] = value(config);
+        break;
+      default:
+        acc[key] = value;
+        break;
+    }
+
+    return acc;
+  }, {});
+};
 
 /**
  * @param {string} configName
@@ -8,9 +30,11 @@ const javascript = require('javascript-stringify');
  * @return {Function}
  */
 exports.create = (configName, config) => {
-  const fn = () => config;
+  const createdConfig = createConfig(config);
+
+  const fn = () => createdConfig;
   fn.configName = configName;
-  fn.config = config;
+  fn.config = createdConfig;
 
   return fn;
 };
