@@ -1,26 +1,46 @@
-import { rgba } from 'polished';
-import { create } from '../core/generator.js';
-import { linearGradient } from '../core/utils.js';
+const { rgba, darken } = require('polished');
+const { create } = require('../core/generator');
 
-import { gradients } from '../example/gradients.js';
+const { color1, color2, color8 } = require('./colors').colors();
 
-export const buttonComponent = create('buttonComponent', {
-  border: {
-    gradients: {
-      idle: linearGradient({ colors: gradients().gradient1.colors.map(color => rgba(color, 0.2)) }),
-      hover: linearGradient({ colors: gradients().gradient2.colors.map(color => rgba(color, 0.2)) }),
+/**
+ * @type {Function}
+ */
+exports.buttonComponent = create('buttonComponent', {
+  primary: {
+    background: {
+      colors: {
+        idle: color1,
+        hover: color8,
+      },
+      text: {
+        colors: {
+          idle: color2,
+        },
+      },
+      ripple: {
+        colors: {
+          idle: ({ primary }) => darken(0.05, primary.background.colors.hover),
+        },
+      },
     },
   },
-  background: {
-    gradients: {
-      idle: linearGradient({ colors: gradients().gradient1.colors.map(color => rgba(color, 0.05)) }),
-      hover: linearGradient({ colors: gradients().gradient2.colors.map(color => rgba(color, 0.05)) }),
+  secondary: {
+    background: {
+      colors: {
+        idle: rgba(color2, 0.1),
+        hover: rgba(color1, 0.1),
+      },
     },
-  },
-  text: {
-    gradients: {
-      idle: linearGradient(gradients().gradient1),
-      hover: linearGradient(gradients().gradient2),
+    text: {
+      colors: {
+        idle: color2,
+      },
+    },
+    ripple: {
+      colors: {
+        idle: ({ secondary }) => darken(0.05, secondary.background.colors.hover),
+      },
     },
   },
 });

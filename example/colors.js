@@ -1,6 +1,6 @@
-import { create } from '../core/generator.js';
+const { create } =  require('../core/generator.js');
 
-export const colors = create('colors', {
+exports.colors = create('colors', {
   color1: '#dbdb00',
   color2: '#ffffff',
   color3: '#1f1d24',

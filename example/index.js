@@ -1,12 +1,6 @@
-import { join } from 'path';
-import { combine, create, extractDir, outputTo } from '../core/generator.js';
+const { join } = require('path');
+const { combine, outputTo } = require('../core/generator.js');
+const { buttonComponent } = require('./button.js');
 
-import { colors } from './colors.js';
-import { gradients } from './gradients.js';
-import { buttonComponent } from './button.js';
-
-const config = create('config', combine(colors, gradients));
-
-const dir = join(extractDir(import.meta), '..', 'theme');
-
-outputTo(join(dir, 'dark.json'), combine(config, buttonComponent)).toJSON();
+const dir = join(__dirname, '..', 'theme');
+outputTo(dir, combine(buttonComponent)).toTypeScript();
