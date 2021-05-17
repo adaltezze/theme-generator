@@ -4,24 +4,28 @@ const kindOf = require('kind-of');
 const javascript = require('javascript-stringify');
 
 /**
- * @param {Object} config
+ * @param {Object} originConfig
  */
-const createConfig = config => {
-  return Object.entries(config).reduce((acc, [key, value]) => {
-    switch (kindOf(value)) {
-      case 'object':
-        acc[key] = createConfig(value);
-        break;
-      case 'function':
-        acc[key] = value(config);
-        break;
-      default:
-        acc[key] = value;
-        break;
-    }
+const createConfig = originConfig => {
+  const run = config => {
+    return Object.entries(config).reduce((acc, [key, value]) => {
+      switch (kindOf(value)) {
+        case 'object':
+          acc[key] = run(value);
+          break;
+        case 'function':
+          acc[key] = value(originConfig);
+          break;
+        default:
+          acc[key] = value;
+          break;
+      }
 
-    return acc;
-  }, {});
+      return acc;
+    }, {});
+  };
+
+  return run(originConfig);
 };
 
 /**
