@@ -3,9 +3,6 @@ const { create } = require('../core/generator');
 
 const { color1, color2, color8 } = require('./colors').colors();
 
-/**
- * @type {Function}
- */
 exports.buttonComponent = create('buttonComponent', {
   primary: {
     background: {
